@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="https://js.braintreegateway.com/web/dropin/1.33.2/js/dropin.min.js"></script>
+</head>
+<body>
+<form id="payment-form" action="/checkout" method="post">
+    <!-- Putting the empty container you plan to pass to
+      `braintree.dropin.create` inside a form will make layout and flow
+      easier to manage -->
+    <div id="dropin-container"></div>
+    <input type="submit"/>
+    <input type="hidden" id="nonce" name="payment_method_nonce"/>
+</form>
+<script src="./index.js" type="text/javascript"></script>
+</body>
+</html>
