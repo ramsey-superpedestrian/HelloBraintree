@@ -5,8 +5,8 @@
     <script src="https://js.braintreegateway.com/web/dropin/1.33.2/js/dropin.min.js"></script>
 </head>
 <body>
-<button onclick="loadPaypalInterface();">load paypal interface</button>
 <button onclick="createCustomer();">create customer</button>
+<button onclick="loadPaypalInterface();">load paypal interface</button>
 <div>customer id: <p id="customerId"></p></div>
 <form id="payment-form" action="/checkout" method="post">
     <!-- Putting the empty container you plan to pass to
