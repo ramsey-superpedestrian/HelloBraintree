@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "5c0ca62d-81dd-43be-bf44-4bb08823c068",
+		"name": "Braintree",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14677771"
+	},
+	"item": [
+		{
+			"name": "Ping",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Braintree-Version",
+						"value": "2022-07-14",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n  ping\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault PM Nonce",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"pm.collectionVariables.set(\"pm_token\", jsonData.data.vaultPaymentMethod.paymentMethod.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Braintree-Version",
+						"value": "2022-07-14",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ExampleVaultWithTypeFragment($input: VaultPaymentMethodInput!) {\n  vaultPaymentMethod(input: $input) {\n    paymentMethod {\n      id\n      usage\n      details {\n        __typename\n        ... on CreditCardDetails {\n          cardholderName\n        }\n        ... on PayPalAccountDetails {\n\t\t\t\t\temail\n        }\n        ... on VenmoAccountDetails {\n          username\n        }\n        ... on UsBankAccountDetails {\n          accountholderName\n        }\n      }\n    }\n    verification {\n      status\n    }\n  }\n}",
+						"variables": "{\n  \"input\": {\n    \"paymentMethodId\": \"{{pm_nonce}}\"\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{private_key}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{public_key}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "dW5kZWZpbmVkOnVuZGVmaW5lZA=="
+		}
+	]
+}
