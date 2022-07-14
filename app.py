@@ -27,6 +27,12 @@ def index_js():
     return send_file("./index.js")
 
 
+@app.route("/create_customer", methods=["POST"])
+def create_customer():
+    result = gateway.customer.create(request.json)
+    return {"customer_id": result.customer.id}
+
+
 @app.route("/checkout", methods=["POST"])
 def create_purchase():
     # nonce_from_the_client = request.form["payment_method_nonce"]
