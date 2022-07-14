@@ -1,3 +1,5 @@
+var CUSTOMER_ID = null;
+
 createCustomer = function(){
     fetch("http://localhost:5000/create_customer", {
         method: "POST",
@@ -18,26 +20,32 @@ createCustomer = function(){
         .then(response => response.json())
         .then(data => {
             document.getElementById("customerId").innerText = data.customer_id;
+            CUSTOMER_ID = data.customer_id;
         })
         .catch(console.log)
 }
 
 
 loadPaypalInterface = function(){
-    fetch("http://localhost:5000/client_token")
+    clientTokenUrl = "http://localhost:5000/client_token/" + CUSTOMER_ID
+    fetch(clientTokenUrl)
         .then(response => response.json())
         .then(data => {
-            console.log(data.token);
-            let CLIENT_TOKEN_FROM_SERVER = data.token;
+            CLIENT_TOKEN_FROM_SERVER = data.token;
 
             braintree.dropin.create({
                 container: document.getElementById('dropin-container'),
                 authorization: CLIENT_TOKEN_FROM_SERVER,
+                paypal: { flow: 'vault'}
             }, (error, dropinInstance) => {
+
                 if (error) console.log(error);
+
                 dropinInstance.requestPaymentMethod((error, payload) => {
-                    console.log(payload);
-                    if (error) console.error(error);
+                    if (error) {
+                        alert("ERROR")
+                        console.error(error);
+                    }
 
                     // Step four: when the user is ready to complete their
                     //   transaction, use the dropinInstance to get a payment

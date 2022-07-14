@@ -48,6 +48,10 @@ def create_purchase():
     return {"result": True}
 
 
-@app.route("/client_token", methods=["GET"])
-def client_token():
-    return {"token": gateway.client_token.generate()}
+@app.route("/client_token/<customer_id>", methods=["GET"])
+def client_token(customer_id):
+    return {
+        "token": gateway.client_token.generate({
+            "customer_id": customer_id
+        })
+    }
