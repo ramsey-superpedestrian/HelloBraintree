@@ -35,17 +35,8 @@ def create_customer():
 
 @app.route("/checkout", methods=["POST"])
 def create_purchase():
-    # nonce_from_the_client = request.form["payment_method_nonce"]
-    nonce_from_the_client = "fake-valid-nonce"
-    result = gateway.transaction.sale({
-        "amount": "10.00",
-        "payment_method_nonce": nonce_from_the_client,
-        "options": {
-            "submit_for_settlement": True
-        }
-    })
-    print(result)
-    return {"result": True}
+    nonce_from_the_client = request.form["payment_method_nonce"]
+    return {"result": nonce_from_the_client}
 
 
 @app.route("/client_token/<customer_id>", methods=["GET"])
