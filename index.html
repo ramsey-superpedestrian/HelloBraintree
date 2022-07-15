@@ -5,6 +5,7 @@
     <script src="https://js.braintreegateway.com/web/dropin/1.33.2/js/dropin.min.js"></script>
 </head>
 <body>
+<input onchange="updateCustomerId()" id="customerIdInput" type="enter customer id">
 <button onclick="createCustomer();">create customer</button>
 <button onclick="loadPaypalInterface();">load paypal interface</button>
 <div>customer id: <p id="customerId"></p></div>

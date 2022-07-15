@@ -1,5 +1,10 @@
 var CUSTOMER_ID = null;
 
+updateCustomerId = function() {
+    CUSTOMER_ID = document.getElementById("customerIdInput").value;
+    document.getElementById("customerId").innerText = CUSTOMER_ID;
+}
+
 createCustomer = function(){
     fetch("http://localhost:5000/create_customer", {
         method: "POST",
