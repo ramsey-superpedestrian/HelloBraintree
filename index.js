@@ -1,4 +1,5 @@
 var CUSTOMER_ID = 579783962;
+var TOKENIZATION_KEY = "sandbox_w3h9kskq_v7623qc96m9gfrtf";
 
 createCustomer = function(){
     fetch("http://localhost:5000/create_customer", {
@@ -10,7 +11,7 @@ createCustomer = function(){
         body: JSON.stringify({
             "first_name": "Jen",
             "last_name": "Smith",
-            "company": "Braintree",
+            "company": "Braint`ree",
             "email": "jen@example.com",
             "phone": "312.555.1234",
             "fax": "614.555.5678",
