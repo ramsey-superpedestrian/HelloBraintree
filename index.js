@@ -7,7 +7,7 @@ updateCustomerId = function () {
 }
 
 createCustomer = function () {
-    fetch("http://localhost:5000/create_customer", {
+    fetch("http://localhost:5001/create_customer", {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -97,7 +97,7 @@ braintreeInit = function (client_token) {
                     onApprove: function (data, actions) {
                         return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
                             console.log(payload.nonce);
-                            createPaymentMethodUrl = "http://localhost:5000/create_payment_method/" + CUSTOMER_ID + "/" + payload.nonce
+                            createPaymentMethodUrl = "http://localhost:5001/create_payment_method/" + CUSTOMER_ID + "/" + payload.nonce
                             fetch(createPaymentMethodUrl).then(response => response.json()).then(console.log)
                         });
                     },
@@ -122,7 +122,7 @@ braintreeInit = function (client_token) {
 }
 
 loadPaypalInterface = function () {
-    clientTokenUrl = "http://localhost:5000/client_token/" + CUSTOMER_ID
+    clientTokenUrl = "http://localhost:5001/client_token/" + CUSTOMER_ID
     fetch(clientTokenUrl)
         .then(response => response.json())
         .then(data => {
@@ -132,7 +132,7 @@ loadPaypalInterface = function () {
 }
 
 charge = function () {
-    chargeUrl = "http://localhost:5000/charge/" + CUSTOMER_ID
+    chargeUrl = "http://localhost:5001/charge/" + CUSTOMER_ID
     fetch(chargeUrl)
         .then(response => response.json())
         .then(console.log)
