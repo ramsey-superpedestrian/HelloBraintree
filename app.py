@@ -80,7 +80,10 @@ def charge(customer_id):
     token = customer_2_token[customer_id]
     transaction = gateway.transaction.sale({
         "amount": amount,
-        "payment_method_token": token
+        "payment_method_token": token,
+        "options": {
+            "submit_for_settlement": True
+        }
     }).transaction
     print(transaction)
     return {
