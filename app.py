@@ -90,3 +90,18 @@ def charge(customer_id):
         "status": transaction.status,
         "amount": amount
     }
+
+
+@app.route("/find_transaction_id/<paypal_id>")
+def find_braintree_id(paypal_id: str) -> str:
+    search_results = gateway.transaction.search(
+        braintree.TransactionSearch.paypal_authorization_id == paypal_id)
+
+    if search_results.maximum_size == 0:
+        search_results = gateway.transaction.search(
+            braintree.TransactionSearch.paypal_payment_id == paypal_id
+        )
+    if search_results.maximum_size > 0:
+        return search_results.first.id
+    else:
+        return None
