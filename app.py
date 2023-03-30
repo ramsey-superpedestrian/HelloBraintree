@@ -43,7 +43,7 @@ def create_purchase():
     # nonce_from_the_client = request.form["payment_method_nonce"]
     nonce_from_the_client = "fake-valid-nonce"
     result = gateway.transaction.sale({
-        "amount": "10.00",
+        "amount": "0.01",
         "payment_method_nonce": nonce_from_the_client,
         "options": {
             "submit_for_settlement": True
@@ -76,14 +76,15 @@ def create_payment_method(customer_id, nonce):
 
 @app.route("/charge/<customer_id>")
 def charge(customer_id):
-    amount = str(random.randint(1, 10000) / 100)
+    amount = "0.01" #"#str(random.randint(1, 10000) / 100)
     token = customer_2_token[customer_id]
     transaction = gateway.transaction.sale({
         "amount": amount,
         "payment_method_token": token,
         "options": {
             "submit_for_settlement": True
-        }
+        },
+        # "merchant_account_id": "superpedestrianeuropebv" # Uncomment to test a specific MAID
     }).transaction
     print(transaction)
     return {
